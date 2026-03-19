@@ -285,28 +285,3 @@ if err != nil {
 ## 示例
 
 查看 `example.go` 文件获取完整示例代码。
-
-## 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-## 许可证
-
-MIT License
-
-## 支持
-
-- 文档：https://developer.work.weixin.qq.com/document/path/101463
-- Issues：https://github.com/yourusername/wechatbot-go/issues
-- 讨论：https://github.com/yourusername/wechatbot-go/discussions
-
-## 更新日志
-
-### v1.0.0 (2024-01-01)
-- 初始版本发布
-- 支持 WebSocket 长连接
-- 支持所有消息类型
-- 支持流式消息回复
-- 支持文件下载解密
-- 支持事件回调处理
-- 支持自动重连和心跳保活
