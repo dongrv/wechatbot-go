@@ -43,7 +43,7 @@ type WSClient struct {
 }
 
 // EventListener 定义事件监听器
-type EventListener func(event interface{})
+type EventListener func(event any)
 
 // NewWSClient 创建新的 WebSocket 客户端
 func NewWSClient(options *types.WSClientOptions) (*WSClient, error) {
@@ -238,7 +238,7 @@ func (c *WSClient) RemoveEventListener(event string, listener EventListener) {
 }
 
 // emitEvent 触发事件
-func (c *WSClient) emitEvent(event string, data interface{}) {
+func (c *WSClient) emitEvent(event string, data any) {
 	c.eventListenersMu.RLock()
 	listeners, exists := c.eventListeners[event]
 	c.eventListenersMu.RUnlock()
@@ -262,17 +262,17 @@ func (c *WSClient) emitEvent(event string, data interface{}) {
 // setupWSEventListeners 设置 WebSocket 事件监听器
 func (c *WSClient) setupWSEventListeners() {
 	// 连接建立事件
-	c.AddEventListener("connected", func(event interface{}) {
+	c.AddEventListener("connected", func(event any) {
 		c.logger.Info("WebSocket connected")
 	})
 
 	// 认证成功事件
-	c.AddEventListener("authenticated", func(event interface{}) {
+	c.AddEventListener("authenticated", func(event any) {
 		c.logger.Info("WebSocket authenticated")
 	})
 
 	// 连接断开事件
-	c.AddEventListener("disconnected", func(event interface{}) {
+	c.AddEventListener("disconnected", func(event any) {
 		if reason, ok := event.(string); ok {
 			c.logger.Warn("WebSocket disconnected: %s", reason)
 		} else {
@@ -281,14 +281,14 @@ func (c *WSClient) setupWSEventListeners() {
 	})
 
 	// 重连事件
-	c.AddEventListener("reconnecting", func(event interface{}) {
+	c.AddEventListener("reconnecting", func(event any) {
 		if attempt, ok := event.(int); ok {
 			c.logger.Info("WebSocket reconnecting (attempt %d)", attempt)
 		}
 	})
 
 	// 错误事件
-	c.AddEventListener("error", func(event interface{}) {
+	c.AddEventListener("error", func(event any) {
 		if err, ok := event.(error); ok {
 			c.logger.Error("WebSocket error: %v", err)
 		}

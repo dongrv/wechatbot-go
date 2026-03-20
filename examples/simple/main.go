@@ -25,22 +25,22 @@ func NewLogAdapter(l *log.Logger) *LogAdapter {
 }
 
 // Debug 输出调试日志
-func (l *LogAdapter) Debug(msg string, args ...interface{}) {
+func (l *LogAdapter) Debug(msg string, args ...any) {
 	l.logger.Printf("[DEBUG] "+msg, args...)
 }
 
 // Info 输出信息日志
-func (l *LogAdapter) Info(msg string, args ...interface{}) {
+func (l *LogAdapter) Info(msg string, args ...any) {
 	l.logger.Printf("[INFO] "+msg, args...)
 }
 
 // Warn 输出警告日志
-func (l *LogAdapter) Warn(msg string, args ...interface{}) {
+func (l *LogAdapter) Warn(msg string, args ...any) {
 	l.logger.Printf("[WARN] "+msg, args...)
 }
 
 // Error 输出错误日志
-func (l *LogAdapter) Error(msg string, args ...interface{}) {
+func (l *LogAdapter) Error(msg string, args ...any) {
 	l.logger.Printf("[ERROR] "+msg, args...)
 }
 
@@ -288,21 +288,21 @@ func main() {
 	client.AddMessageHandler(handler)
 
 	// 添加事件监听器
-	client.AddEventListener("connected", func(event interface{}) {
+	client.AddEventListener("connected", func(event any) {
 		mainLogger.Printf("WebSocket 连接已建立")
 	})
 
-	client.AddEventListener("authenticated", func(event interface{}) {
+	client.AddEventListener("authenticated", func(event any) {
 		mainLogger.Printf("认证成功")
 	})
 
-	client.AddEventListener("disconnected", func(event interface{}) {
+	client.AddEventListener("disconnected", func(event any) {
 		if reason, ok := event.(string); ok {
 			mainLogger.Printf("连接断开: %s", reason)
 		}
 	})
 
-	client.AddEventListener("reconnecting", func(event interface{}) {
+	client.AddEventListener("reconnecting", func(event any) {
 		if attempt, ok := event.(int); ok {
 			mainLogger.Printf("正在重连 (第 %d 次尝试)", attempt)
 		}

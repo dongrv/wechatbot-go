@@ -41,10 +41,10 @@ func (l Level) String() string {
 
 // Logger 定义日志接口
 type Logger interface {
-	Debug(msg string, args ...interface{})
-	Info(msg string, args ...interface{})
-	Warn(msg string, args ...interface{})
-	Error(msg string, args ...interface{})
+	Debug(msg string, args ...any)
+	Info(msg string, args ...any)
+	Warn(msg string, args ...any)
+	Error(msg string, args ...any)
 	SetLevel(level Level)
 	GetLevel() Level
 }
@@ -74,7 +74,7 @@ func (l *DefaultLogger) GetLevel() Level {
 }
 
 // log 内部日志方法
-func (l *DefaultLogger) log(level Level, msg string, args ...interface{}) {
+func (l *DefaultLogger) log(level Level, msg string, args ...any) {
 	if level < l.level {
 		return
 	}
@@ -94,22 +94,22 @@ func (l *DefaultLogger) log(level Level, msg string, args ...interface{}) {
 }
 
 // Debug 输出调试日志
-func (l *DefaultLogger) Debug(msg string, args ...interface{}) {
+func (l *DefaultLogger) Debug(msg string, args ...any) {
 	l.log(LevelDebug, msg, args...)
 }
 
 // Info 输出信息日志
-func (l *DefaultLogger) Info(msg string, args ...interface{}) {
+func (l *DefaultLogger) Info(msg string, args ...any) {
 	l.log(LevelInfo, msg, args...)
 }
 
 // Warn 输出警告日志
-func (l *DefaultLogger) Warn(msg string, args ...interface{}) {
+func (l *DefaultLogger) Warn(msg string, args ...any) {
 	l.log(LevelWarn, msg, args...)
 }
 
 // Error 输出错误日志
-func (l *DefaultLogger) Error(msg string, args ...interface{}) {
+func (l *DefaultLogger) Error(msg string, args ...any) {
 	l.log(LevelError, msg, args...)
 }
 
@@ -117,16 +117,16 @@ func (l *DefaultLogger) Error(msg string, args ...interface{}) {
 type NullLogger struct{}
 
 // Debug 不输出调试日志
-func (l *NullLogger) Debug(msg string, args ...interface{}) {}
+func (l *NullLogger) Debug(msg string, args ...any) {}
 
 // Info 不输出信息日志
-func (l *NullLogger) Info(msg string, args ...interface{}) {}
+func (l *NullLogger) Info(msg string, args ...any) {}
 
 // Warn 不输出警告日志
-func (l *NullLogger) Warn(msg string, args ...interface{}) {}
+func (l *NullLogger) Warn(msg string, args ...any) {}
 
 // Error 不输出错误日志
-func (l *NullLogger) Error(msg string, args ...interface{}) {}
+func (l *NullLogger) Error(msg string, args ...any) {}
 
 // SetLevel 设置日志级别（空实现）
 func (l *NullLogger) SetLevel(level Level) {}

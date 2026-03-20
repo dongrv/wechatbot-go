@@ -58,7 +58,7 @@ type ConnectionManager interface {
 	// SendFrame 发送 WebSocket 帧
 	SendFrame(frame *types.WsFrame) error
 	// SendReply 发送回复消息
-	SendReply(reqID string, body interface{}, cmd types.WsCmd) (*types.WsFrame, error)
+	SendReply(reqID string, body any, cmd types.WsCmd) (*types.WsFrame, error)
 	// SetCredentials 设置认证凭证
 	SetCredentials(botID, secret string)
 	// SetMessageHandler 设置消息处理器
@@ -336,7 +336,7 @@ func (m *Manager) sendFrameInternal(frame *types.WsFrame) error {
 }
 
 // SendReply 发送回复消息
-func (m *Manager) SendReply(reqID string, body interface{}, cmd types.WsCmd) (*types.WsFrame, error) {
+func (m *Manager) SendReply(reqID string, body any, cmd types.WsCmd) (*types.WsFrame, error) {
 	// 验证请求 ID
 	if err := utils.ValidateReqID(reqID); err != nil {
 		return nil, fmt.Errorf("invalid req_id: %w", err)

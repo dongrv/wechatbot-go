@@ -9,10 +9,10 @@ import (
 
 // Logger 定义日志接口
 type Logger interface {
-	Debug(msg string, args ...interface{})
-	Info(msg string, args ...interface{})
-	Warn(msg string, args ...interface{})
-	Error(msg string, args ...interface{})
+	Debug(msg string, args ...any)
+	Info(msg string, args ...any)
+	Warn(msg string, args ...any)
+	Error(msg string, args ...any)
 	SetLevel(level logger.Level)
 	GetLevel() logger.Level
 }
@@ -58,7 +58,7 @@ type WsFrame struct {
 	// Headers 请求头
 	Headers WsFrameHeaders `json:"headers"`
 	// Body 消息体
-	Body interface{} `json:"body,omitempty"`
+	Body any `json:"body,omitempty"`
 	// ErrCode 响应错误码
 	ErrCode int `json:"errcode,omitempty"`
 	// ErrMsg 响应错误信息
@@ -70,7 +70,7 @@ type WsFrameHeaders struct {
 	// ReqID 请求唯一标识
 	ReqID string `json:"req_id"`
 	// 其他可能的头部字段
-	Extra map[string]interface{} `json:"-"`
+	Extra map[string]any `json:"-"`
 }
 
 // From 定义消息发送者信息

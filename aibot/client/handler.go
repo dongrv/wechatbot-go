@@ -397,7 +397,7 @@ func (h *FrameHandler) handleHeartbeat(frame *types.WsFrame) error {
 }
 
 // parseFrameBody 解析帧体
-func (h *FrameHandler) parseFrameBody(frame *types.WsFrame, target interface{}) error {
+func (h *FrameHandler) parseFrameBody(frame *types.WsFrame, target any) error {
 	if frame.Body == nil {
 		return fmt.Errorf("frame body is nil")
 	}
